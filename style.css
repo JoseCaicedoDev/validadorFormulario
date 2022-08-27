@@ -80,6 +80,20 @@ input[type="submit"]{
   font-size: 0.7rem;
   display: none;
 }
+input[type="submit"].disableBtn{
+  background-color: var(--dark-grayish-violet);
+}
+.message{
+  text-align: center;
+  color: var(--very-dark-violet);
+  display: none;
+}
+.messageError{
+  text-align: center;
+  color: var(--red);
+  font-size: 0.8rem;
+  display: none;
+}
 .active{
   display: block;
 }

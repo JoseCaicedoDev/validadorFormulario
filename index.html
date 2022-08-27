@@ -17,7 +17,7 @@
         <span class="errorText_name">valor Invalido nombre</span>
 
         <label for="email">Correo Electronico</label>
-        <input type="email" placeholder="maria@gmail.com" id="email" name="email">
+        <input type="email" placeholder="maria@mail.com" id="email" name="email">
         <span class="errorText_email">valor Invalido correo</span>
 
         <label for="pass">Contraseña</label>
@@ -28,8 +28,10 @@
           <input type="checkbox" name="check" id="check">
           <label for="check" class="termino">Aceptar términos y condiciones</label>
         </fieldset>
-        <input type="submit" value="Registrarse">
+        <p class="messageError">Error: Por favor rellene el formulario correctamente ❌ </p>
+        <input type="submit" value="Registrarse" class="disableBtn">
       </form>
+      <p class="message">Mensaje Enviado ✅</p>
     </div>
   </main>
   <script src="index.js"></script>
