@@ -1,82 +1,86 @@
 const expresiones = {
-  nombre: /^[a-zA-ZÀ-ÿ\s]{1,25}$/, // Letras y espacios, pueden llevar acentos.
-  password: /^.{8,20}$/, // 8 a 20 digitos.
-  correo: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/
+  name: /^[a-zA-ZÀ-ÿ\s]{1,25}$/, // Letras y espacios, pueden llevar acentos.
+  pass: /^.{8,20}$/, // 8 a 20 digitos.
+  email: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/
 };
 
 const form = document.querySelector('#form');
 const inputs = document.querySelectorAll('#form input');
+/* const inputName = document.querySelector('#name');
+const inputEmail = document.querySelector('#email');
+const inputPass = document.querySelector('#pass'); */
+const inputCheck = document.querySelector('#check');
+const btnSubmit = document.querySelector('input[type=submit]');
 
-const campos ={
+form['status'] = {
   name: false,
   email: false,
   pass: false,
+  check: false
+};
+
+function validate(form) {
+  return form.status
 }
 
-const validateForm = (e) =>{
-  switch(e.target.name){
-    case 'nombre':
-      validateCamp(expresiones.nombre, e.target, "name")
-      console.log(campos)
-      break
-      case 'email':
-      validateCamp(expresiones.correo, e.target, "email")
-      console.log(campos)
-      break
-      case 'pass':
-      validateCamp(expresiones.password, e.target, "pass")
-      console.log(campos)
-      break
-  }
-}
+const validateCamp = (input) => {
+  const id = input.id;
+  const expressions = expresiones[id];
 
-const validateCamp = (expressions, input, camp ) =>{
   if (expressions.test(input.value)) {
-    document.querySelector(`#${camp}`).classList.remove('error');
-    document.querySelector(`.errorText_${camp}`).classList.remove('active')
-    campos[camp] = true
+    input.classList.remove('error');
+    document.querySelector(`.errorText_${id}`).classList.remove('active')
+    input.form['status'][id] = true;
   } else {
-    document.querySelector(`#${camp}`).classList.add('error');
-    document.querySelector(`.errorText_${camp}`).classList.add('active')
-    campos[camp] = false
+    input.classList.add('error');
+    document.querySelector(`.errorText_${id}`).classList.add('active')
+    input.form['status'][id] = false;
   }
 }
 
-inputs.forEach((input)=>{
-  input.addEventListener('keyup', validateForm)
-  input.addEventListener('blur', validateForm)
-})
-console.log(campos)
-
-const terminos = document.querySelector('#check')
-terminos.addEventListener('change', (e)=>{
-  if (campos.name && campos.email && campos.pass && terminos.checked){
-    //document.querySelector('input[type="submit"]').classList.remove('disableBtn')
-    document.querySelector('.messageError').classList.remove('active')
-  }else{
-    document.querySelector('input[type="submit"]').classList.add('disableBtn')
-  }
-})
-
-form.addEventListener('submit', (e) =>{
+form.addEventListener("change", function (e) {
   e.preventDefault();
-  console.log(validate())
-/*   if(campos.name && campos.email && campos.pass && terminos.checked){
-    form.reset()
-    document.querySelector('.message').classList.add('active')
-    document.querySelector('input[type="submit"]').classList.remove('disableBtn')
-    setTimeout(()=>{
-      document.querySelector('.message').classList.remove('active')
-    },2000)
-  }else{
-    document.querySelector('.messageError').classList.add('active')
-  } */
+  const input = e.target;
+  const form = input.parentElement;
+  if (validate(form)) {
+    btnSubmit.classList.remove('disableBtn');
+  }
+
+});
+
+function validateInput() {
+  if (validate(form).name && validate(form).email && validate(form).pass && inputCheck.checked) {
+    btnSubmit.classList.remove('disableBtn');
+  } else {
+    btnSubmit.classList.add('disableBtn');
+  }
+}
+// Esquema para los inputName, inputEmail, inputPass
+/* inputPass.addEventListener("keyup", function (e) {
+  const input = e.target;
+  validateCamp(input);
+  const form = input.form;
+  validateInput()
+}); */
+//OJO
+inputs.forEach((input) => {
+  input.addEventListener('keyup', function (e) {
+    const input = e.target;
+    validateCamp(input);
+    validateInput()
 })
 
-const validate = () => {
-  return campos.name && campos.email && campos.pass && terminos.checked
-}
-console.log(validate())
-console.log(campos)
+inputCheck.addEventListener("click", function (e) {
+  validateInput()
+});
 
+form.addEventListener('submit', (e) => {
+  e.preventDefault();
+  document.querySelector('.message').classList.add('active')
+  setTimeout(() => {
+    document.querySelector('.message').classList.remove('active')
+  }, 2000)
+  form.reset();
+});
 
+})
