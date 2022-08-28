@@ -79,7 +79,8 @@ form.addEventListener('submit', (e) => {
   document.querySelector('.message').classList.add('active')
   setTimeout(() => {
     document.querySelector('.message').classList.remove('active')
-  }, 2000)
+    location.reload();
+  }, 20000)
   form.reset();
 });
 
