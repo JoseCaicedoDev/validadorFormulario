@@ -1,6 +1,7 @@
 # Validador Formulario
 
-![validadorFormulario](https://user-images.githubusercontent.com/26255765/191043140-3206c68f-b232-4709-8207-34f06c615b2f.png)
+![form](https://user-images.githubusercontent.com/26255765/201205365-20cb97e7-ad19-4315-bd3a-267b281dc6ff.png)
+
 
 ### Proyecto
 -------------
